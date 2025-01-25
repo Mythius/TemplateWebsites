@@ -39,6 +39,8 @@ https://docs.google.com/spreadsheets/d/1krlUz5I4pBlbyine5ZK7wwfmdwMFIKSYAD_RmG01
 
 Choose a password
 
+edit: https://github.com/Mythius/TemplateWebsites/blob/main/manager/createNewWebsite.sh#L3, to be your personal username on the device
+
 Then run:
 `sudo sh createNewWebsite.sh yourwebsite.com password`
 
