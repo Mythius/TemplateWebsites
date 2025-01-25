@@ -23,7 +23,7 @@ https://github.com/glotlabs/gdrive/blob/main/docs/create_google_api_credentials.
 I used a Raspberry Pi, and compiled this version of Gdrive for aarch64:
 https://drive.google.com/file/d/1-8XcOuPSDXZtOXwEYGc12sXAhzp_dsCO/view
 
-`gdrive account add`
+`sudo gdrive account add`
 
 ## Clone this repo into the home directory on RaspberryPi or Ubuntu
 `/home/<you>/TemplateWebsites`
