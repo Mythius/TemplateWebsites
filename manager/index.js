@@ -40,6 +40,7 @@ app.post("/:id/:domain/:password", async (req, res) => {
         domain: decodeURI(req.params.domain),
         password: decodeURI(req.params.password),
       };
+      file.save('config.json',JSON.stringify(config));
       await createNew(id);
     }
     res.json({ success: true });
