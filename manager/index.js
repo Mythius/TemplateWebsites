@@ -29,17 +29,18 @@ async function createNew(id){
 
 app.post("/:id/:domain/:password", async (req, res) => {
   if (decodeURI(req.headers.authorization) == password) {
-    if (req.params.id in config) {
-      config[req.params.id] = {
-        domain: req.params.domain,
-        password: req.params.password,
+    let id = decodeURI(req.params.id);
+    if (id in config) {
+      config[id] = {
+        domain: decodeURI(req.params.domain),
+        password: decodeURI(req.params.password),
       };
     } else {
-      config[req.params.id] = {
-        domain: req.params.domain,
-        password: req.params.password,
+      config[id] = {
+        domain: decodeURI(req.params.domain),
+        password: decodeURI(req.params.password),
       };
-      await createNew(req.params.id);
+      await createNew(id);
     }
     res.json({ success: true });
   } else {
@@ -47,7 +48,7 @@ app.post("/:id/:domain/:password", async (req, res) => {
   }
 });
 app.delete("/:id", async (req, res) => {
-  if (decodeURI(req.headers.authorization) == password && req.params.id in config) {
+  if (decodeURI(req.headers.authorization) == password && decodeURI(req.params.id) in config) {
     res.json({ success: true });
   } else {
     res.json({ success: false });
