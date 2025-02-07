@@ -28,7 +28,7 @@ async function createNew(id){
 }
 
 app.post("/:id/:domain/:password", async (req, res) => {
-  if (req.headers.authorization == password) {
+  if (decodeURI(req.headers.authorization) == password) {
     if (req.params.id in config) {
       config[req.params.id] = {
         domain: req.params.domain,
@@ -47,7 +47,7 @@ app.post("/:id/:domain/:password", async (req, res) => {
   }
 });
 app.delete("/:id", async (req, res) => {
-  if (req.headers.authorization == password && req.params.id in config) {
+  if (decodeURI(req.headers.authorization) == password && req.params.id in config) {
     res.json({ success: true });
   } else {
     res.json({ success: false });
