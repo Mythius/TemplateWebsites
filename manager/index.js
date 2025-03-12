@@ -1,4 +1,4 @@
-const password = "qwerqwer";
+const password = "supersecretpassword12345";
 const express = require("express");
 const app = express();
 const port = process.argv[2] || 80;
@@ -19,15 +19,19 @@ file.read(
 
 async function createNew(id){
     let p = new Promise((res,rej)=>{
-        let sh = system.spawn('/bin/bash',['createNewWebsite.sh',config[id].domain,config[id].password]);
+        let sh = system.spawn('/bin/bash',['-e','createNewWebsite.sh',config[id].domain,config[id].password]);
         sh.on('exit',code=>{
             res();
-        })
+        });
+	sh.on('data',data=>{
+		console.log(data.toString());
+	});
     });
     await p;
 }
 
 app.post("/:id/:domain/:password", async (req, res) => {
+  console.log(req.params);
   if (decodeURI(req.headers.authorization) == password) {
     let id = decodeURI(req.params.id);
     if (id in config) {
@@ -43,6 +47,7 @@ app.post("/:id/:domain/:password", async (req, res) => {
       file.save('config.json',JSON.stringify(config));
       await createNew(id);
     }
+    file.save('config.json',JSON.stringify(config));
     res.json({ success: true });
   } else {
     res.json({ success: false });
