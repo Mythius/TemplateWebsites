@@ -39,8 +39,8 @@ echo "$p1$port" >> server.sh
 
 # Update nginx
 cd /home/$user/TemplateWebsites/manager
-sudo sh updateNGINX.sh $name $port
+sudo bash updateNGINX.sh $name $port
 
 # Create Service File for Server
 completepath="$path/server.sh"
-sudo sh createServiceFile.sh $name $completepath
+sudo bash createServiceFile.sh $name $completepath
