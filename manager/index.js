@@ -32,17 +32,17 @@ async function createNew(id){
 
 app.post("/:id/:domain/:password", async (req, res) => {
   console.log(req.params);
-  if (decodeURI(req.headers.authorization) == password) {
-    let id = decodeURI(req.params.id);
+  if (req.headers.authorization == password) {
+    let id = req.params.id;
     if (id in config) {
       config[id] = {
-        domain: decodeURI(req.params.domain),
-        password: decodeURI(req.params.password),
+        domain: req.params.domain,
+        password: req.params.password,
       };
     } else {
       config[id] = {
-        domain: decodeURI(req.params.domain),
-        password: decodeURI(req.params.password),
+        domain: req.params.domain,
+        password: req.params.password,
       };
       file.save('config.json',JSON.stringify(config));
       await createNew(id);
@@ -54,7 +54,7 @@ app.post("/:id/:domain/:password", async (req, res) => {
   }
 });
 app.delete("/:id", async (req, res) => {
-  if (decodeURI(req.headers.authorization) == password && decodeURI(req.params.id) in config) {
+  if (req.headers.authorization == password && req.params.id in config) {
     res.json({ success: true });
   } else {
     res.json({ success: false });
@@ -62,6 +62,14 @@ app.delete("/:id", async (req, res) => {
 });
 app.get("/", async (req, res) => {
   res.json({ success: true });
+});
+
+app.use((err, _req, res, next) => {
+  if (err instanceof URIError) {
+    res.status(400).json({ success: false, error: 'Invalid URL encoding' });
+  } else {
+    next(err);
+  }
 });
 
 app.listen(port, () => {
